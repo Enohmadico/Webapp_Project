@@ -5,11 +5,11 @@ on:
   push:
     branches:
       - main
-      - develop
+      
   pull_request:
     branches: 
       - main
-      - develop
+      
   workflow_dispatch:
 env:
   DOTNET_ROOT: "."
@@ -80,7 +80,7 @@ jobs:
     needs: Build
     name: Deploying To Webapp Service
     environment:
-      name: 'DEVELOPMENT'
+      name: 'production'
       url: ${{steps.deploy-to-webapp.outputs.webapp-url}}
     runs-on: windows-latest
     steps:
@@ -95,7 +95,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.TESTING_DEV_PUBLISH_PROFILE}}
+          publish-profile: ${{ secrets.AZUREPUBLICPROFILE}}
           package: .
 
 
